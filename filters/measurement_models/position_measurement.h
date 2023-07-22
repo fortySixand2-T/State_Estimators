@@ -25,6 +25,10 @@ public:
 
     const Eigen::Matrix<double, row_size_, column_size_> getMeasurementMatrix(){ return this->measurement_matrix_;}
     const Eigen::Matrix<double, 2, 2> getMeasurementNoise(){ return this->measurement_noise_;}
+    const std::uint32_t getMeasurementMatrixRows(){ return this->row_size_;}
+    const std::uint32_t getMeasurementMatrixCols(){ return this->column_size_;}
+    const auto getMeasurementNoiseRows(){ return static_cast<std::uint32_t>(this->measurement_noise_.rows());}
+    const auto getMeasurementNoiseCols(){ return static_cast<std::uint32_t>(this->measurement_noise_.cols());}
 
 private:
 
@@ -47,4 +51,5 @@ void PositionMeasurement::initializeMeasurementMatrix()
 void PositionMeasurement::initializeMeasurementNoise()
 {
     this->measurement_noise_.setIdentity();
+
 }

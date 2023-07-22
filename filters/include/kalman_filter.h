@@ -28,5 +28,18 @@ void KalmanFilter::predict(const double delta_t)
 
 void KalmanFilter::updateKalmanGain()
 {
+    Eigen::Matrix<double, 6, 6> tmp_covariance_mat{ this->motion_model_.getCovarianceMat() };
+    const std::uint32_t meas_model_rows{ this->measurement_model_.getMeasurementMatrixRows() };
+    const std::uint32_t meas_model_cols{ this->measurement_model_.getMeasurementMatrixCols() };
+    const std::uint32_t meas_noise_rows{ this->measurement_model_.getMeasurementNoiseRows() };
+    const std::uint32_t meas_noise_cols{ this->measurement_model_.getMeasurementNoise() };
+    Eigen::Matrix<double, meas_model_rows, meas_model_cols> measurement_mat{ this->measurement_model_.getMeasurementMatrix() };
 
+    Eigen::Matrix<double, meas_noise_rows, meas_noise_cols> innovation_inverse = measurement_mat * tmp_covariance_mat * measurement_mat.transpose() + measurement_model_.getMeasurementNoise();
+    this->kalman_gain_ = tmp_covariance_mat * measurement_mat.transpose() * innovation_inverse.inverse();
+}
+
+void KalmanFilter::update()
+{
+    
 }
