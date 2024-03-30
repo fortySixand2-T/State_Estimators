@@ -37,6 +37,18 @@ public:
     }
 
     const auto getCurrentStates(){return states_;}
+    std::uint32_t getStateVectorSize() const{ return this->state_size_;}
+    const Eigen::Matrix<double, 6, 1> getStatesInMatrix(){
+        Eigen::Matrix<double, 6, 1> state;
+        state[0][0] = state.position_x;
+        state[1][0] = state.position_y;
+        state[2][0] = state.velocity_x;
+        state[3][0] = state.velocity_y;
+        state[4][0] = state.acceleration_x;
+        state[5][0] = state.acceleration_y;
+
+        return state;
+    }
     const std::uint32_t getNumberOfStates(){ return this->state_size_;}
     Eigen::Matrix<double, 6, 6> getCovarianceMat(){return this->covariance_matrix_;}
     Eigen::Matrix<double, 6, 6> getStateTransitionMat(){return this->state_transition_matrix_;}
@@ -65,7 +77,7 @@ private:
     void initializeProcessNoise();
 
     const variance_const_acceleration_params variance_vector_;
-    const std::uint32_t state_size_;
+    const std::uint32_t state_size_{6U};
     constant_acceleration_states states_;
     Eigen::Matrix<double, 6, 6> covariance_matrix_;
     Eigen::Matrix<double, 6, 6> state_transition_matrix_;
