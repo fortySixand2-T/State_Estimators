@@ -17,3 +17,12 @@ struct constant_velocity_states
     State<double> velocity_x;
     State<double> velocity_y;
 };
+
+struct constant_turnrate_velocity_states
+{
+    State<double> position_x;
+    State<double> position_y;
+    State<double> velocity;
+    State<double> yaw;
+    State<double> yaw_dd;
+};
